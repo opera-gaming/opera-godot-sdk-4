@@ -1,0 +1,141 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6rul2mi323te"]
+
+[ext_resource type="Script" path="res://demo/scripts/ChallengeTest.gd" id="1_sqfpx"]
+
+[node name="ChallengeTest" type="Control"]
+auto_translate_mode = 1
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_sqfpx")
+
+[node name="ScoreInput" type="TextEdit" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 96.0
+offset_top = 72.0
+offset_right = 184.0
+offset_bottom = 127.0
+
+[node name="SubmitButton" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 192.0
+offset_top = 72.0
+offset_right = 352.0
+offset_bottom = 128.0
+text = "Submit"
+
+[node name="GetGlobalScoresButton" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 96.0
+offset_top = 160.0
+offset_right = 352.0
+offset_bottom = 208.0
+text = "Get Global Scores"
+
+[node name="GetUserScoresButton" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 96.0
+offset_top = 216.0
+offset_right = 352.0
+offset_bottom = 264.0
+text = "Get User Scores"
+
+[node name="GetChallenges" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 96.0
+offset_top = 272.0
+offset_right = 352.0
+offset_bottom = 320.0
+text = "Get Challenges"
+
+[node name="GetProfile" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 96.0
+offset_top = 328.0
+offset_right = 352.0
+offset_bottom = 376.0
+text = "Get Profile"
+
+[node name="challengeID" type="TextEdit" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 448.0
+offset_top = 71.0
+offset_right = 960.0
+offset_bottom = 126.0
+
+[node name="page" type="TextEdit" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 448.0
+offset_top = 160.0
+offset_right = 576.0
+offset_bottom = 215.0
+
+[node name="pageSize" type="TextEdit" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 704.0
+offset_top = 160.0
+offset_right = 832.0
+offset_bottom = 215.0
+
+[node name="trackId" type="TextEdit" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 448.0
+offset_top = 248.0
+offset_right = 960.0
+offset_bottom = 303.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 40.0
+offset_right = 960.0
+offset_bottom = 71.0
+text = "challengeId"
+vertical_alignment = 2
+
+[node name="Label4" type="Label" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 448.0
+offset_top = 216.0
+offset_right = 960.0
+offset_bottom = 247.0
+text = "trackId"
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 448.0
+offset_top = 128.0
+offset_right = 576.0
+offset_bottom = 159.0
+text = "page"
+vertical_alignment = 2
+
+[node name="Label3" type="Label" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 704.0
+offset_top = 128.0
+offset_right = 832.0
+offset_bottom = 159.0
+text = "pageSize"
+vertical_alignment = 2
+
+[connection signal="button_up" from="SubmitButton" to="." method="_on_button_button_up"]
+[connection signal="button_up" from="GetGlobalScoresButton" to="." method="_on_get_global_scores_button_up"]
+[connection signal="button_up" from="GetUserScoresButton" to="." method="_on_get_user_scores_button_up"]
+[connection signal="button_up" from="GetChallenges" to="." method="_on_get_challenges_button_up"]
+[connection signal="button_up" from="GetProfile" to="." method="_on_get_profile_button_up"]

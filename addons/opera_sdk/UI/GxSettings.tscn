@@ -1,0 +1,268 @@
+[gd_scene load_steps=20 format=3 uid="uid://bglyq1yr0ywot"]
+
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/GxSettings.gd" id="1_jfo7s"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/Update.gd" id="2_e2ml3"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/AuthLabel.gd" id="3_igjok"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/SelectGamePopup.gd" id="4_k5mwf"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/GameNameText.gd" id="5_3r1ob"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/GameNameWarning.gd" id="6_evp2h"]
+[ext_resource type="PackedScene" uid="uid://cbcvkvns14ftn" path="res://addons/opera_sdk/UI/VersionEditor.tscn" id="7_8f53h"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/SelectGroupPopup.gd" id="8_2trai"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/RegisterOnGxGames.gd" id="9_uwgfw"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/PostBuild.gd" id="10_uvxrk"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/EditGameOnOpera.gd" id="11_exqc0"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/InternalShareUrl.gd" id="12_s7rie"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/PublicShareUrl.gd" id="13_85lmr"]
+[ext_resource type="Texture2D" uid="uid://dxtig5oviljfh" path="res://addons/opera_sdk/images/spinner_background.png" id="15_kbo6l"]
+[ext_resource type="Texture2D" uid="uid://hfc4do1cke5q" path="res://addons/opera_sdk/images/spinner_indicator.png" id="16_60p4a"]
+[ext_resource type="Script" path="res://addons/opera_sdk/UI/Spinner.gd" id="17_t05y6"]
+
+[sub_resource type="Animation" id="Animation_arf2e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_4fpru"]
+resource_name = "rotation"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nuxt5"]
+_data = {
+"RESET": SubResource("Animation_arf2e"),
+"rotation": SubResource("Animation_4fpru")
+}
+
+[node name="GxSettings" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+script = ExtResource("1_jfo7s")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AuthorizationSection" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/AuthorizationSection"]
+layout_mode = 2
+
+[node name="AuthorizationLabel" type="Label" parent="VBoxContainer/AuthorizationSection/VBoxContainer"]
+layout_mode = 2
+text = "Authorization on GX.Games"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AuthorizationSection/VBoxContainer"]
+layout_mode = 2
+
+[node name="Update" type="Button" parent="VBoxContainer/AuthorizationSection/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Update"
+script = ExtResource("2_e2ml3")
+
+[node name="Label" type="Label" parent="VBoxContainer/AuthorizationSection/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "You are authorized as Mr. Anonymous"
+script = ExtResource("3_igjok")
+
+[node name="ProductInfoSection" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ProductInfoSection"]
+layout_mode = 2
+
+[node name="ProductInformation" type="Label" parent="VBoxContainer/ProductInfoSection/VBoxContainer"]
+layout_mode = 2
+text = "Product Information"
+
+[node name="SelectGame" type="HBoxContainer" parent="VBoxContainer/ProductInfoSection/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ProductInfoSection/VBoxContainer/SelectGame"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Select Game"
+
+[node name="MenuButton" type="OptionButton" parent="VBoxContainer/ProductInfoSection/VBoxContainer/SelectGame"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("4_k5mwf")
+
+[node name="GameName" type="HBoxContainer" parent="VBoxContainer/ProductInfoSection/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ProductInfoSection/VBoxContainer/GameName"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Game Name"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+caret_blink = true
+script = ExtResource("5_3r1ob")
+
+[node name="GameNameWarning" type="Label" parent="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer"]
+modulate = Color(0.972549, 0.054902, 0.054902, 1)
+layout_mode = 2
+text = "The name is empty or contains invalid characters."
+script = ExtResource("6_evp2h")
+
+[node name="Version" parent="VBoxContainer/ProductInfoSection/VBoxContainer" instance=ExtResource("7_8f53h")]
+layout_mode = 2
+
+[node name="NextVersion" parent="VBoxContainer/ProductInfoSection/VBoxContainer" instance=ExtResource("7_8f53h")]
+layout_mode = 2
+
+[node name="Label" parent="VBoxContainer/ProductInfoSection/VBoxContainer/NextVersion" index="0"]
+text = "Next Version"
+
+[node name="Major" parent="VBoxContainer/ProductInfoSection/VBoxContainer/NextVersion/HBoxContainer" index="0"]
+caret_blink = true
+
+[node name="Minor" parent="VBoxContainer/ProductInfoSection/VBoxContainer/NextVersion/HBoxContainer" index="1"]
+caret_blink = true
+
+[node name="Build" parent="VBoxContainer/ProductInfoSection/VBoxContainer/NextVersion/HBoxContainer" index="2"]
+caret_blink = true
+
+[node name="Revision" parent="VBoxContainer/ProductInfoSection/VBoxContainer/NextVersion/HBoxContainer" index="3"]
+caret_blink = true
+
+[node name="SelectGroup" type="HBoxContainer" parent="VBoxContainer/ProductInfoSection/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ProductInfoSection/VBoxContainer/SelectGroup"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Select Group (for new games only)"
+
+[node name="MenuButton" type="OptionButton" parent="VBoxContainer/ProductInfoSection/VBoxContainer/SelectGroup"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("8_2trai")
+
+[node name="RegisterOnGxGames" type="Button" parent="VBoxContainer/ProductInfoSection/VBoxContainer"]
+layout_mode = 2
+text = "Register on GX.Games"
+script = ExtResource("9_uwgfw")
+
+[node name="UploadToGxGames" type="Button" parent="VBoxContainer/ProductInfoSection/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Upload To Gx.Games"
+script = ExtResource("10_uvxrk")
+
+[node name="UrlButtonsSection" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/UrlButtonsSection"]
+layout_mode = 2
+
+[node name="EditGameOnOpera" type="Button" parent="VBoxContainer/UrlButtonsSection/VBoxContainer"]
+layout_mode = 2
+text = "Edit Game on Opera"
+script = ExtResource("11_exqc0")
+
+[node name="InternalShareUrl" type="Button" parent="VBoxContainer/UrlButtonsSection/VBoxContainer"]
+layout_mode = 2
+text = "Internal Share URL"
+script = ExtResource("12_s7rie")
+
+[node name="PublicShareUrl" type="Button" parent="VBoxContainer/UrlButtonsSection/VBoxContainer"]
+layout_mode = 2
+text = "Public Share URL"
+script = ExtResource("13_85lmr")
+
+[node name="UiBlocker" type="Panel" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.27451)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SpinnerBackground" type="TextureRect" parent="UiBlocker"]
+modulate = Color(1, 1, 1, 0.470588)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_kbo6l")
+
+[node name="SpinnerIndicator" type="TextureRect" parent="UiBlocker"]
+modulate = Color(0.403922, 0.380392, 1, 0.470588)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(128, 128)
+texture = ExtResource("16_60p4a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UiBlocker/SpinnerIndicator"]
+libraries = {
+"": SubResource("AnimationLibrary_nuxt5")
+}
+autoplay = "rotation"
+script = ExtResource("17_t05y6")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="button_up" from="VBoxContainer/AuthorizationSection/VBoxContainer/HBoxContainer/Update" to="VBoxContainer/AuthorizationSection/VBoxContainer/HBoxContainer/Update" method="_on_Update_button_up"]
+[connection signal="text_changed" from="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer/HBoxContainer/LineEdit" method="_on_LineEdit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer/GameNameWarning" method="_on_LineEdit_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/ProductInfoSection/VBoxContainer/GameName/VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/ProductInfoSection/VBoxContainer/RegisterOnGxGames" method="_on_line_edit_text_changed"]
+[connection signal="version_changed" from="VBoxContainer/ProductInfoSection/VBoxContainer/NextVersion" to="." method="_on_NextVersion_version_changed"]
+[connection signal="button_up" from="VBoxContainer/ProductInfoSection/VBoxContainer/RegisterOnGxGames" to="VBoxContainer/ProductInfoSection/VBoxContainer/RegisterOnGxGames" method="_on_RegisterOnGxGames_button_up"]
+[connection signal="button_up" from="VBoxContainer/ProductInfoSection/VBoxContainer/UploadToGxGames" to="VBoxContainer/ProductInfoSection/VBoxContainer/UploadToGxGames" method="_on_UploadToGxGames_button_up"]
+[connection signal="button_up" from="VBoxContainer/UrlButtonsSection/VBoxContainer/EditGameOnOpera" to="VBoxContainer/UrlButtonsSection/VBoxContainer/EditGameOnOpera" method="_on_EditGameOnOpera_button_up"]
+[connection signal="button_up" from="VBoxContainer/UrlButtonsSection/VBoxContainer/InternalShareUrl" to="VBoxContainer/UrlButtonsSection/VBoxContainer/InternalShareUrl" method="_on_InternalShareUrl_button_up"]
+[connection signal="button_up" from="VBoxContainer/UrlButtonsSection/VBoxContainer/PublicShareUrl" to="VBoxContainer/UrlButtonsSection/VBoxContainer/PublicShareUrl" method="_on_PublicShareUrl_button_up"]
+
+[editable path="VBoxContainer/ProductInfoSection/VBoxContainer/NextVersion"]

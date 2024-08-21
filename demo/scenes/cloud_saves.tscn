@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4riwh5nv1grl"]
+
+[ext_resource type="Script" path="res://demo/scripts/SavesDemo.gd" id="1_lqwj7"]
+
+[node name="CloudSaves" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lqwj7")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 73.0
+offset_right = 582.0
+offset_bottom = 126.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 76.0
+offset_right = 292.0
+offset_bottom = 127.0
+text = "Enter your score:"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 157.0
+offset_right = 433.0
+offset_bottom = 204.0
+text = "Save"
+
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

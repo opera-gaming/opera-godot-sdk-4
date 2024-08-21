@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=3 uid="uid://jc6mor7o1shy"]
+
+[ext_resource type="AudioStream" uid="uid://dss5th8264qjk" path="res://demo/artwork/731731__josefpres__piano-loops-142-octave-up-long-loop-120-bpm.wav" id="1_b767k"]
+[ext_resource type="Texture2D" uid="uid://yyfjdi6no3ot" path="res://demo/artwork/gx-games-square-logo.png" id="2_rwl7a"]
+[ext_resource type="Script" path="res://demo/scripts/TriggerPayment.gd" id="3_dyeyr"]
+[ext_resource type="Script" path="res://demo/scripts/CheckPayment.gd" id="4_2w8pm"]
+[ext_resource type="Script" path="res://demo/scripts/GoToScene.gd" id="6_upc5v"]
+[ext_resource type="PackedScene" uid="uid://c6rul2mi323te" path="res://demo/scenes/challenge_test.tscn" id="6_wlcuf"]
+[ext_resource type="PackedScene" uid="uid://b4riwh5nv1grl" path="res://demo/scenes/cloud_saves.tscn" id="6_wr4a5"]
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 83.0
+offset_right = 510.0
+offset_bottom = 158.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_b767k")
+autoplay = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 443.0
+offset_top = 251.0
+offset_right = 699.0
+offset_bottom = 507.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_rwl7a")
+
+[node name="TriggerPayment" type="Button" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 242.0
+offset_right = 257.0
+offset_bottom = 285.0
+text = "Trigger Payment"
+script = ExtResource("3_dyeyr")
+
+[node name="CheckPayment" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 79.0
+offset_top = 293.0
+offset_right = 256.0
+offset_bottom = 336.0
+text = "Check Payment"
+script = ExtResource("4_2w8pm")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 205.0
+offset_right = 360.0
+offset_bottom = 228.0
+text = "See payment output in console"
+
+[node name="GoToCloudSaves" type="Button" parent="."]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 386.0
+offset_right = 316.0
+offset_bottom = 428.0
+text = "-> To Cloud Saves"
+script = ExtResource("6_upc5v")
+target_scene = ExtResource("6_wr4a5")
+
+[node name="GoToChallenges" type="Button" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 79.0
+offset_top = 440.0
+offset_right = 316.0
+offset_bottom = 482.0
+text = "-> To Challenges"
+script = ExtResource("6_upc5v")
+target_scene = ExtResource("6_wlcuf")
+
+[connection signal="button_up" from="TriggerPayment" to="TriggerPayment" method="_on_button_up"]
+[connection signal="button_up" from="CheckPayment" to="CheckPayment" method="_on_button_up"]
+[connection signal="button_up" from="GoToCloudSaves" to="GoToCloudSaves" method="_on_button_up"]
+[connection signal="button_up" from="GoToChallenges" to="GoToChallenges" method="_on_button_up"]
