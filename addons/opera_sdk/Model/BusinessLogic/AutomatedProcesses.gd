@@ -14,7 +14,6 @@ var _game_synchronizer: GameSynchronizer
 var _local_game_data: LocalGameData
 var _new_game_registrator: NewGameRegistrator
 var _post_build_actions_manager: PostBuildActionsManager
-var _bundle_verifier: BundleVerifier
 
 func _init(
 	sessionStorage: SessionStorage, 
@@ -23,8 +22,7 @@ func _init(
 	game_synchronizer: GameSynchronizer,
 	local_game_data: LocalGameData,
 	new_game_registrator: NewGameRegistrator,
-	post_build_actions_manager: PostBuildActionsManager,
-	bundle_verifier: BundleVerifier
+	post_build_actions_manager: PostBuildActionsManager
 ):
 	_sessionStorage = sessionStorage
 	_utils = utils
@@ -33,7 +31,6 @@ func _init(
 	_local_game_data = local_game_data
 	_new_game_registrator = new_game_registrator
 	_post_build_actions_manager = post_build_actions_manager
-	_bundle_verifier = bundle_verifier
 
 func Update(withSynchronization: bool, forceMinimalNextVersion: bool) -> void:
 	RunInThread(_Update.bind(withSynchronization, forceMinimalNextVersion))
@@ -65,16 +62,12 @@ func BuildAndUploadAutomated(index_file_path: String, editorExportPlugin: Editor
 
 func _BuildAndUploadAutomated(index_file_path: String, editorExportPlugin: EditorExportPlugin) -> void:
 	ActWithEvents(func(): return \
-		VerifyBundle(index_file_path, editorExportPlugin) &&\
 		Authorize() &&\
 		Synchronize() &&\
 		RegisterGame() &&\
 		PostBuildActions(index_file_path),
 		"Successfully uploaded the game",
 		"Failed to upload the game. See the console for details.");
-
-func VerifyBundle(index_file_path: String, editorExportPlugin: EditorExportPlugin) -> bool:
-	return _bundle_verifier.VerifyBundle(index_file_path, editorExportPlugin)
 
 func PostBuildActions(index_file_path: String) -> bool:
 	var gameId = _local_game_data.id;

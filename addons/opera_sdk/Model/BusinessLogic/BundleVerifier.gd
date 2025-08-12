@@ -12,13 +12,22 @@ func _init(utils: Utils, local_game_data: LocalGameData) -> void:
 	_utils = utils
 	_local_game_data = local_game_data
 
-func VerifyBundle(index_file_path: String, editorExportPlugin: EditorExportPlugin) -> bool:
+func VerifyBundle(
+	index_file_path: String,
+	buildDirectory: String,
+	editorExportPlugin: EditorExportPlugin
+) -> bool:
 	_editorExportPlugin = editorExportPlugin
 	_errors = []
 	_warnings = []
 	
+	# Checking that we do not export to the project root
+	if buildDirectory == ".":
+		_add_error("You are trying to export the game to the project's root. " +
+			"Please choose another folder")
+	
 	if !index_file_path.ends_with('index.html'):
-		_errors.push_back('Error: Cannot upload to GX.Games. The main file of the bundle should be named "index.html"')
+		_errors.push_back('Error: Cannot postprocess for GX.Games. The main file of the bundle should be named "index.html"')
 	
 	if (_get_option('variant/thread_support')):
 		_add_error('Please disable "Thread Support" in the export settings.')
@@ -30,10 +39,14 @@ func VerifyBundle(index_file_path: String, editorExportPlugin: EditorExportPlugi
 		_add_error('The name is empty or contains invalid characters. Please assign the valid game name in "GxSettings" window.')
 	
 	for warning in _warnings:
-		_utils.print_deferred(warning)
+		push_warning(warning)
+		# Strange, print_deferred doesn't work in the main thread
+		# _utils.print_deferred(warning)
 	
 	for error in _errors:
-		_utils.print_deferred(error)
+		printerr(error)
+		# Strange, print_deferred doesn't work in the main thread
+		# _utils.print_deferred(error)
 	
 	return _errors.size() == 0
 
@@ -41,7 +54,7 @@ func _get_option(name: StringName):
 	return _editorExportPlugin.get_option(name)
 
 func _add_error(description: String) -> void:
-	_errors.push_back('Error: Cannot upload to GX.Games. ' + description)
+	_errors.push_back('Error: Cannot postprocess for GX.Games. ' + description)
 
 func _add_warning(description: String) -> void:
 	_warnings.push_back('Warning: Possible errors when running the project on GX.Games. ' + description)

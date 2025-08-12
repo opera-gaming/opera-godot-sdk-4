@@ -141,5 +141,5 @@ func PostBuild(indexFilePath: String, editorExportPlugin: EditorExportPlugin) ->
 func CancelProgress() -> void:
 	_progress_ui.CancelProgress()
 
-func PostBuildActionsForZip(index_file_path: String) -> void:
-	_post_build_actions_manager.PostBuildActionsForZip(index_file_path)
+func PostProcessCode(index_file_path: String, editorExportPlugin: EditorExportPlugin) -> bool:
+	return _post_build_actions_manager.PostprocessCode(index_file_path, editorExportPlugin)

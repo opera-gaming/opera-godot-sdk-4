@@ -12,11 +12,14 @@ func get_full_version_payment_status() -> void:
 		return
 	
 	var gameId = _utils.get_query_param("game")
+	var trackId = _utils.get_query_param("track")
 	
 	_do_request(
-		OperaSdkConfig.SERVER_URL + "gg/games/{gameId}/full-version".format({
-			"gameId": gameId
-		}),
+		OperaSdkConfig.SERVER_URL +
+			"gg/games/{gameId}/full-version?trackId={trackId}".format({
+				"gameId": gameId,
+				"trackId": trackId,
+			}),
 		FetchOptionsFactory.with_credentials()
 	)
 

@@ -24,7 +24,14 @@ func _export_end():
 	if not _is_gx_export:
 		return
 	
-	showDialogueBox()
+	print("Uploading cancelled. Postprocessing the code for GX.Games...")
+	var postprocess_success = _opera_adapter.PostProcessCode(_path, self)
+	print("Postprocessing finished. Success: " + str(postprocess_success))
+	
+	if postprocess_success:
+		showDialogueBox()
+	else:
+		show_error_dialogue_box()
 
 func showDialogueBox():
 	var dialog = AcceptDialog.new()
@@ -37,14 +44,17 @@ func showDialogueBox():
 	EditorInterface.popup_dialog_centered(dialog)
 	
 	dialog.get_ok_button().button_up.connect(_post_build)
-	
-	var cancel_button = dialog.add_cancel_button("Cancel")
-	cancel_button.button_up.connect(_post_build_for_zip)
-	
+	dialog.add_cancel_button("Cancel")
+
 func _post_build():
 	_opera_adapter.PostBuild(_path, self)
 
-func _post_build_for_zip():
-	print("Uploading cancelled. Postprocessing the code for GX.Games...")
-	_opera_adapter.PostBuildActionsForZip(_path)
-	print("Postprocessing the code for GX.Games finished.")
+func show_error_dialogue_box():
+	var dialog = AcceptDialog.new()
+	dialog.exclusive = false
+	dialog.dialog_text = "Failed to postprocess the compiled game files. See the console for details."
+	dialog.title = "GX.Games"
+	dialog.exclusive = true
+	dialog.transient = true
+	dialog.unresizable = true
+	EditorInterface.popup_dialog_centered(dialog)

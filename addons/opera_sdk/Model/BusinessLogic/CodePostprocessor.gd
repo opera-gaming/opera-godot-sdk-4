@@ -12,11 +12,9 @@ class_name CodePostprocessor
 const config_code_regex = r'''<\!-- index.config(?<config_code>(?s).*)end index.config.js -->'''
 
 var _utils: Utils
-var _progress_ui: ProgressIndicationInterface
 
-func _init(utils: Utils, progress_ui) -> void:
+func _init(utils: Utils) -> void:
 	_utils = utils
-	progress_ui = _progress_ui
 
 func post_process_code(buildDirectory: String) -> bool:
 	return _extract_config_js(buildDirectory)

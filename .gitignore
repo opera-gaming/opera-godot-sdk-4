@@ -22,8 +22,7 @@ gxgames.cfg
 
 # Documentation generation output.
 /docs_xml
-/docfx/_site
-/docfx/api
+dev-only/docfx/api
 
 # GxGames bundle
 GxGamesBundle.zip

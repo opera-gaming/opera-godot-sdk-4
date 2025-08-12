@@ -37,7 +37,9 @@ static func create_opera_sdk(dock_instance: GxSettings) -> OperaSdkFacade:
 		register_game_request)
 	
 	var game_size_analyzer = GameSizeAnalyzer.new(utils, local_game_data)
-	var code_postprocessor = CodePostprocessor.new(utils, progress_ui)
+	var code_postprocessor = CodePostprocessor.new(utils)
+	
+	var bundle_verifier = BundleVerifier.new(utils, local_game_data)
 	
 	var post_build_actions_manager = PostBuildActionsManager.new(
 		local_game_data, 
@@ -48,9 +50,8 @@ static func create_opera_sdk(dock_instance: GxSettings) -> OperaSdkFacade:
 		sessionStorage,
 		progress_ui,
 		gx_response_handler,
-		code_postprocessor)
-	
-	var bundle_verifier = BundleVerifier.new(utils, local_game_data)
+		code_postprocessor,
+		bundle_verifier)
 	
 	var automated_processes = AutomatedProcesses.new(
 		sessionStorage, 
@@ -63,8 +64,7 @@ static func create_opera_sdk(dock_instance: GxSettings) -> OperaSdkFacade:
 		game_synchronizer,
 		local_game_data,
 		new_game_registrator,
-		post_build_actions_manager,
-		bundle_verifier)
+		post_build_actions_manager)
 	
 	var options_factory = OptionsFactory.new(sessionStorage, local_game_data)
 	

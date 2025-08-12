@@ -11,6 +11,7 @@ var _progress_ui: ProgressIndicationInterface
 var _gx_response_handler: GxResponseHandler
 var _code_postprocessor: CodePostprocessor
 var _zip_directory_packer: ZIPDirectoryPacker = ZIPDirectoryPacker.new()
+var _bundle_verifier: BundleVerifier
 
 var _gameId: String;
 var _buildDirectory: String;
@@ -24,7 +25,8 @@ func _init(
 	session_storage: SessionStorage,
 	progress_ui: ProgressIndicationInterface,
 	gx_response_handler: GxResponseHandler,
-	code_postprocessor: CodePostprocessor
+	code_postprocessor: CodePostprocessor,
+	bundle_verifier: BundleVerifier
 ):
 	_gameDataStorage = gameDataStorage
 	_synchronizer = synchronizer
@@ -35,21 +37,15 @@ func _init(
 	_progress_ui = progress_ui
 	_gx_response_handler = gx_response_handler
 	_code_postprocessor = code_postprocessor
+	_bundle_verifier = bundle_verifier
 
 func PostBuildActions(gameId: String, index_file_path: String) -> bool:
 	_gameId = gameId;
 	_buildDirectory = get_directory_of(index_file_path);
 	
-	# Checking that we do not export to the project root
-	if _buildDirectory == ".":
-		_utils.print_deferred("You are trying to export the game to the project's root. " +
-			"Please choose another folder")
-		return false
-	
 	_progress_ui.OnProgressBegin("Post build actions", "Starting post build actions");
 	
-	var actions_result = PostprocessCode() &&\
-						 CheckBuildSize() &&\
+	var actions_result = CheckBuildSize() &&\
 						 CompressBuild() &&\
 						 Upload();
 	
@@ -57,8 +53,12 @@ func PostBuildActions(gameId: String, index_file_path: String) -> bool:
 	
 	return actions_result
 
-func PostprocessCode() -> bool:
-	return _code_postprocessor.post_process_code(_buildDirectory)
+func PostprocessCode(index_file_path: String, editorExportPlugin: EditorExportPlugin) -> bool:
+	var buildDirectory = get_directory_of(index_file_path);
+	
+	return \
+		_bundle_verifier.VerifyBundle(index_file_path, buildDirectory, editorExportPlugin) &&\
+		_code_postprocessor.post_process_code(buildDirectory)
 
 func CheckBuildSize() -> bool:
 	return _gameSizeAnalyzer.UploadingIsAllowedFor(_buildDirectory);
@@ -114,18 +114,3 @@ func _parse_game_data(serverResponse: String) -> GameDataApi:
 	
 	_utils.print_deferred("Unknown error on uploading the game.")
 	return null
-
-func PostBuildActionsForZip(index_file_path: String) -> void:
-	_buildDirectory = get_directory_of(index_file_path);
-	
-	# Checking that we do not export to the project root
-	if _buildDirectory == ".":
-		_utils.print_deferred("You are trying to export the game to the project's root. " +
-			"Please choose another folder")
-		return
-	
-	_progress_ui.OnProgressBegin("Post build actions", "Starting postprocessing the code");
-	
-	PostprocessCode();
-	
-	_progress_ui.OnProgressEnd();
