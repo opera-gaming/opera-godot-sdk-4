@@ -9,4 +9,11 @@ func initialize(opera_adapter: OperaSdkFacade):
 	
 func update():
 	var isAuthorized = _opera_adapter.IsAuthorized
-	text = ("You are authorized as " + _opera_adapter.ProfileName) if isAuthorized else "You are not authorzied"
+	
+	if isAuthorized:
+		var displayedName = (_opera_adapter.ProfileName) \
+			if (_opera_adapter.ProfileName != null && _opera_adapter.ProfileName != "") \
+			else "[Username Not Set]"
+		text = "You are authorized as " + displayedName
+	else:
+		text = "You are not authorzied"
